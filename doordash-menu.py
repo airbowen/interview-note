@@ -55,7 +55,19 @@ class Node:
         self.value = value        # 节点的值
         self.is_active = is_active  # 节点的活动状态
         self.children = []        # 子节点列表
+        
+# 构建hashmap，提高查找速度
+# 类似题目：LeetCode 133: Clone Graph
+# 递归遍历树结构查找变化
+def get_child_nodes(menu):
+    """ 返回节点的子节点字典 """
+    children_map = {}
+    if menu is None:
+        return children_map
 
+    for child in menu.children:
+        children_map[child.key] = child
+    return children_map
 
 def get_modified_items(old_menu, new_menu):
     """ 递归比较旧菜单和新菜单的节点，并计算变化的数量 """
@@ -69,9 +81,14 @@ def get_modified_items(old_menu, new_menu):
         #print(f'Changed Node: {old_menu} -> {new_menu}')
         count += 1
 
-    # 获取子节点字典
+    # 获取子节点 hashmap 以提高查找速度
     children_old = get_child_nodes(old_menu)
     children_new = get_child_nodes(new_menu)
+
+    #第一遍遍历 children_old：找出 删除的节点 和 被修改的节点。
+    # 第二遍遍历 children_new：找出 新增的节点。
+    # 两次遍历确保完整性，避免遗漏新增/删除的情况。
+    # 这是一种 双向 Diff（对比）算法，类似 Git Diff 比较文件变更的逻辑。
 
     # 遍历旧菜单中的每个子节点
     for key in children_old:
@@ -85,15 +102,6 @@ def get_modified_items(old_menu, new_menu):
     return count
 
 
-def get_child_nodes(menu):
-    """ 返回节点的子节点字典 """
-    children_map = {}
-    if menu is None:
-        return children_map
-
-    for child in menu.children:
-        children_map[child.key] = child
-    return children_map
 
 
 # 示例输入
