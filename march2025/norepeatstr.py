@@ -1,7 +1,7 @@
 from heapq import heappop, heappush, heapify
 from collections import Counter
 
-# 第一问：重排字符串
+# 第一问：重排字符串    yama intern 1st question
 # 给定一个字符串，要求重新排列字符串，使得相邻字符不相同
 def rearrange_string(s):
     # 统计字符出现的次数
@@ -32,7 +32,7 @@ print(rearrange_string("bcaab"))  # 可能输出 "abacb"
 print(rearrange_string("aaabbc"))  # 可能输出 "ababac"
 print(rearrange_string("aaa"))  # 无法重新排列，返回 ""
 
-# 第二问
+# 第二问 yama intern 2nd question
 
 # 还是hashset ，两数之和那种
 def find_pairs(nums, target):
