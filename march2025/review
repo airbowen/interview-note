@@ -1,0 +1,132 @@
+import java.io.*;
+import java.util.*;
+
+// can you hear us ?no
+// cannot
+// ok ,can hear now
+// great
+class Solution {
+
+
+    public static int canConstruct(String source, String target) {
+        // Create frequency maps for source and target
+        HashMap<Character, Integer> sourceMap = new HashMap<>();
+        HashMap<Character, Integer> targetMap = new HashMap<>();
+        
+        // Fill the source map with character frequencies
+        for (char c : source.toCharArray()) {
+            sourceMap.put(c, sourceMap.getOrDefault(c, 0) + 1);
+        }
+        
+        // Fill the target map with character frequencies
+        for (char c : target.toCharArray()) {
+            targetMap.put(c, targetMap.getOrDefault(c, 0) + 1);
+        }
+        
+        // Check if the source string has enough characters for the target string
+        // for (char c : targetMap.keySet()) {
+        //     if (sourceMap.getOrDefault(c, 0) < targetMap.get(c)) {
+        //         return false;
+        //     }
+        // }
+
+        // f返回值要改为int，不是boolean了
+          int minCopies = 0; // 最少复制次数是所有字符所需复制次数中的最大值
+
+// 他让你举例子
+
+//  source  {a:1, b:1, c:1}，
+//  target：{a:2, b:2, c:2}。
+// 对于 'a'、'b'、'c'，都需要 2 次复制
+
+// source = "abcd"，target = "dcba"。
+// 目标字符串 dcba 只包含源字符串中的字符 d, c, b, a，且字符的频率完全相同。
+// 所以，源字符串复制一次就足够满足目标字符串的所有字符需求
+
+
+// 问他，顺序重要吗、？需要维持一个顺序吗？
+
+        //遍历源字符串和目标字符串，构建字符频率表
+        //对于目标字符串中的每个字符，计算源字符串需要多少次复制才能满足目标字符的数量需求
+        // Check for each character in the target map
+        for (char c : targetMap.keySet()) {
+            if (!sourceMap.containsKey(c)) {
+                return minCopies; // If the source doesn't contain a character from target, return -1
+            }
+            
+            // Calculate the required number of copies for each character
+            int sourceCount = sourceMap.get(c);
+            int targetCount = targetMap.get(c);
+            
+            // Use ceiling to calculate the minimum number of copies required for each character
+            int copiesForChar = (int) Math.ceil((double) targetCount / sourceCount);
+            
+            // Track the maximum copies needed
+            minCopies = Math.max(minCopies, copiesForChar);
+        }
+        
+        return minCopies;
+    }
+
+    // 只有考虑顺序，才需要4次
+
+// 暴力解法 他想要暴力解法，就是while 循环，不考虑hash表了 
+// 时间复杂度 是 O(n + m)，就是遍历 source + target
+
+// 如果想在main 里执行，需要static 方法
+    public static int minimumCopies(String source, String target) {
+        int sourceLen = source.length();
+        int targetLen = target.length();
+        
+        int copyCount = 1;  // 至少需要一次复制源字符串
+        int sourceIndex = 0; // 用来遍历源字符串
+        int targetIndex = 0; // 用来遍历目标字符串
+
+        // 遍历目标字符串
+        while (targetIndex < targetLen) {
+            // 如果当前源字符串的字符和目标字符串的字符匹配
+            if (source.charAt(sourceIndex) == target.charAt(targetIndex)) {
+                targetIndex++;  // 匹配成功，目标字符串的指针向前移动
+                // same 不copy，直接移动到下一个检查
+            }
+            
+            sourceIndex++;  // 移动源字符串的指针
+            // source 会遍历多次，
+        // 代码的核心逻辑已经正确地处理了目标字符的匹配，无需额外修改
+// source = "abcd"，target = "dcba"。只要同一个位置不一样，就copy
+// Copy 1 - Traversing source: abcd
+// Matching d with d
+// Copy 2 - Traversing source: abcd
+// Matching c with c
+// Copy 3 - Traversing source: abcd
+// Matching b with b
+// Copy 4 - Traversing source: abcd
+// Matching a with a
+// Total source traversals: 4
+// Minimum copies required: 4
+
+        // 如果源字符串遍历完了，说明需要再复制一次源字符串
+            if (sourceIndex == sourceLen) {
+                copyCount++;  // 增加复制次数
+                sourceIndex = 0;  // 重置源字符串的指针
+            }
+        }
+
+        return copyCount;
+    }
+
+      public static void main(String[] args) {
+
+
+
+// input 是要全部匹配吗？ 时间 on 空间 o 1，最差是 o new
+
+// minium number of copy？
+
+    //System.out.println(minimumCopies("abab", "ba"));
+    System.out.println(minimumCopies("ab", "b")); // failed this case 
+    System.out.println(minimumCopies("papa", "ap"));
+
+  }
+
+}
