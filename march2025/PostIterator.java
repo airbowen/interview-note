@@ -24,7 +24,7 @@ lastVisited：上一次访问过的节点（用于判断右子树是否访问过
 第二个栈：将第一个栈的出栈结果压入，最终按后序遍历顺序输出。
 */
 import java.util.*;
-class Solution {
+class PostIterator {
     class TreeNode {
         int val;
         TreeNode left, right;
