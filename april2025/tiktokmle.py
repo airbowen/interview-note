@@ -1,4 +1,5 @@
 # # 4.14 tiktok AI infra mle interview
+
 # # 这道题是经典的“找峰值”（Find Peak Element）问题
 # #每次比较 mid 和 mid + 1，如果 mid 比右边大，说明左边存在峰值；
 # # 如果 mid 比右边小，说明右边一定有峰值；
